@@ -15,7 +15,7 @@ public class GuessTheNumber {
     static void plaуInGame() {
         int randomNumber = new Random().nextInt(10);
         int attempts = 3;
-        System.out.println("Угадайте число, введите от 0 до 9 ");
+        System.out.println("Угадайте число, введите от 0 до 9");
 
         boolean resultGame = guessingNumber(attempts, randomNumber);
 
