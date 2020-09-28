@@ -13,13 +13,10 @@ public class CrossZero {
     //int computer = 0;
     //int user = 1;
     static String currentSign = "";
-    static int CurrentX;
-    static int CurrentY;
 
     public static void main(String[] args) {
 
         createGameField();
-
 
         do {
             getWhoGoesNext();
@@ -27,8 +24,9 @@ public class CrossZero {
             drawField();
         }
         while (checkNoWinner());
+
         String winner = currentSign == compSign ? "компьютер" : "пользователь";
-        System.out.println("Победу одержал " + winner);
+        System.out.println("Победу одержал " + winner.toUpperCase());
     }
 
     static void createGameField() {
