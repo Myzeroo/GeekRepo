@@ -22,6 +22,7 @@ public class CrossZero {
             getWhoGoesNext();
             makeMove();
             drawField();
+            checkAvailableFreeCell();
         }
         while (checkNoWinner());
 
@@ -109,8 +110,7 @@ public class CrossZero {
                 y = new Scanner(System.in).nextInt() - 1;
 
                 if (x >= 0 && x < GFL                // значения находятся в пределах массива
-                        && y >= 0 && y < GFL)
-                {
+                        && y >= 0 && y < GFL) {
                     break INNER;
                 }
                 System.out.println("Значения должны быть от 1 до " + GFL + "\nпопробуй еще раз...");
@@ -131,6 +131,24 @@ public class CrossZero {
             return false;
         }
         return true;
+    }
+
+    static void checkAvailableFreeCell() {
+        int quantityCell = GFL * GFL;
+        int counter = 0;
+        for (String[] si : GameField) {
+            for (String s : si) {
+                if (s != emptySign) counter++;
+            }
+        }
+        if(counter == quantityCell){
+            System.out.println("Ничья!!! \nПопробуй сразиться еще раз! \n+++++++++++++++++++++++");
+            for (int i = 0; i < GFL; i++) {
+                for (int j = 0; j < GFL; j++) {
+                    GameField[i][j] = emptySign;
+                }
+            }
+        }
     }
 
     static boolean checkNoWinner() {
@@ -183,6 +201,8 @@ public class CrossZero {
         }
         return true;
     }
+
+
 }
 
 
