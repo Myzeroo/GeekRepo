@@ -2,7 +2,7 @@ package HomeWork_06;
 
 public class Cat extends Animal {
 
-    Cat() {
+    public Cat() {
         maxLengthRun = (int) (200 * getCoefficientOfPhysicalCapabilities());
         double val = 2.0 * getCoefficientOfPhysicalCapabilities();
         maxHeightJumpOver = ((int) (val * 100)) / 100D;
