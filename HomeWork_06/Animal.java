@@ -2,30 +2,28 @@ package HomeWork_06;
 
 import java.util.Random;
 
-// как и в прошлый раз, модификаторы доступа паблик были убраны намерернно,
-// т.к. в задании не указывается необходимость использования дынных классов в других пакетах
-abstract class Animal {
+public abstract class Animal {
 
-    int maxLengthRun;
-    int maxLengthSwim;
-    double maxHeightJumpOver;
+    protected int maxLengthRun;
+    protected int maxLengthSwim;
+    protected double maxHeightJumpOver;
 
-    void run(int length) {
+    public void run(int length) {
         boolean result = maxLengthRun > length ? true : false;
         System.out.println("результат: run: " + result);
     }
 
-    void swim(int length) {
+    public void swim(int length) {
         boolean result = maxLengthSwim > length ? true : false;
         System.out.println("результат: swim: " + result);
     }
 
-    void jumpOver(double height) {
+    public void jumpOver(double height) {
         boolean result = maxHeightJumpOver > height ? true : false;
         System.out.println("результат: jumpOver: " + result);
     }
 
-    double getCoefficientOfPhysicalCapabilities() {
+    protected double getCoefficientOfPhysicalCapabilities() {
         // вычисление коэффициента от 0.8 до 1.2, разброс в 20%
         return 0.8 + (new Random().nextInt(41)) / 100D;
     }

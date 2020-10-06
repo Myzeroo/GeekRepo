@@ -1,8 +1,8 @@
 package HomeWork_06;
 
-class Main {
+public class Main {
     public static void main(String[] args) {
-        // Ссылка общего типа испольщуется просто для привыкания, что так иногда будет
+
         Animal Bobik = new Dog();
         Animal Sharik = new Dog();
         Animal Kirpich = new Cat();
