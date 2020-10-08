@@ -1,7 +1,7 @@
 package HomeWork_06;
 
-public class Main {
-    public static void main(String[] args) {
+class Main {
+    static void main(String[] args) {
 
         Animal Bobik = new Dog();
         Animal Sharik = new Dog();
