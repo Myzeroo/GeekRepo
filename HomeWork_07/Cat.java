@@ -6,7 +6,7 @@ public class Cat {
     private boolean satiety;
 
     public void isSatiety() {
-        System.out.println("Сытость кота " + satiety);;
+        System.out.println("Сытость кота " + name + " " + satiety);;
     }
 
     public Cat(String name, int appetite) {

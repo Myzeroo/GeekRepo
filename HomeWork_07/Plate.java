@@ -11,10 +11,8 @@ public class Plate {
         if ((food - n) > 0) {
             food -= n;
             return true;
-        } else {
-            System.out.println("Недостаточно еды в тарелке");
-            return false;
         }
+        return false;
     }
 
     public void info() {
