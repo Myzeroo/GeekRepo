@@ -8,7 +8,8 @@ public class Plate {
     }
 
     public void decreaseFood(int n) {
-        food -= n;
+        if ((food - n) > 0) food -= n;
+        else System.out.println("Недостаточно еды в тарелке");
     }
 
     public void info() {
