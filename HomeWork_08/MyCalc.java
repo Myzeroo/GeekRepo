@@ -43,13 +43,12 @@ public class MyCalc {
         centerPanel.add(minusBtn);
 
         JButton cancelBtn = new JButton("C");
+        cancelBtn.addActionListener(abListener);
         centerPanel.add(cancelBtn);
 
         JButton submitBtn = new JButton("Submit");
+        submitBtn.addActionListener(abListener);
         centerPanel.add(submitBtn);
-
-
-
 
         mainFarame.setVisible(true);
     }
