@@ -8,5 +8,8 @@ public class Main {
         mv1.run();
         mv2.run();
         mv3.run();
+
+        Treadmill.doRun(mv1, true);
+        Treadmill.doRun(mv2, false);
     }
 }
