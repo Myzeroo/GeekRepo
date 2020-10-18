@@ -1,7 +1,6 @@
 package HomeWork_2_01;
 
 public abstract class Treadmill {
-    //static Moveable user;
 
     static void doRun(Moveable user, boolean passed) {
         user.run();
