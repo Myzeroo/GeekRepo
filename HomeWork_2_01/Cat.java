@@ -1,13 +1,23 @@
 package HomeWork_2_01;
 
 public class Cat implements Moveable {
-    @Override
-    public void run() {
-        System.out.println("Cat run");
+    private int maxDistance;
+    private int maxHeight;
+
+    public Cat(int maxDistance, int maxHeight){
+        this.maxDistance = maxDistance;
+        this.maxHeight = maxHeight;
     }
 
     @Override
-    public void jump() {
-        System.out.println("Cat jump");
+    public int run() {
+        System.out.println("Кот бежит");
+        return maxDistance;
+    }
+
+    @Override
+    public int jump() {
+        System.out.println("Кот прыгает");
+        return maxHeight;
     }
 }

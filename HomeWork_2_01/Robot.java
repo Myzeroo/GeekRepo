@@ -1,13 +1,23 @@
 package HomeWork_2_01;
 
 public class Robot implements Moveable {
-    @Override
-    public void run() {
-        System.out.println("robot run");
+    private int maxDistance;
+    private int maxHeight;
+
+    public Robot(int maxDistance, int maxHeight){
+        this.maxDistance = maxDistance;
+        this.maxHeight = maxHeight;
     }
 
     @Override
-    public void jump() {
-        System.out.println("robot jump");
+    public int run() {
+        System.out.println("Робот бежит");
+        return maxDistance;
+    }
+
+    @Override
+    public int jump() {
+        System.out.println("Робот прыгает");
+        return maxHeight;
     }
 }

@@ -1,14 +1,23 @@
 package HomeWork_2_01;
 
 public class Human implements Moveable {
+    private int maxDistance;
+    private int maxHeight;
 
-    @Override
-    public void run() {
-        System.out.println("Human run");
+    public Human(int maxDistance, int maxHeight){
+        this.maxDistance = maxDistance;
+        this.maxHeight = maxHeight;
     }
 
     @Override
-    public void jump() {
-        System.out.println("Human jump");
+    public int run() {
+        System.out.println("Человек бежит");
+        return maxDistance;
+    }
+
+    @Override
+    public int jump() {
+        System.out.println("Человек прыгает");
+        return maxHeight;
     }
 }
