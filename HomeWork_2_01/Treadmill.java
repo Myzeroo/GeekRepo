@@ -10,10 +10,16 @@ public class Treadmill implements Passable {
     @Override
     public void overcomeObstacle(Moveable user) {
 
+        if (user.isDescent()) {
+            System.out.println("=== Выбыл ===");
+            return;
+        }
+
         if (user.run() > distance) {
             System.out.println("успешно пробежал");
         } else {
             System.out.println("не смог пробежать ");
+            user.setDescent(true);
         }
     }
 }

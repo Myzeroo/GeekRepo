@@ -16,6 +16,7 @@ public class Main {
         for (Passable ps: arrPas) {
             for (Moveable mv: arrMov) {
                 ps.overcomeObstacle(mv);
+                System.out.println("----------------");
             }
         }
     }

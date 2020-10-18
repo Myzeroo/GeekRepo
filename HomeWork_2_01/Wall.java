@@ -10,10 +10,16 @@ public class Wall implements Passable {
     @Override
     public void overcomeObstacle(Moveable user) {
 
+        if (user.isDescent()) {
+            System.out.println("=== Не учавствует ===");
+            return;
+        }
+
         if (user.jump() > altitude) {
             System.out.println("успешно преодолел");
         } else {
             System.out.println("не смог преодолеть");
+            user.setDescent(true);
         }
     }
 }
