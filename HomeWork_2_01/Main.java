@@ -6,10 +6,17 @@ public class Main {
        Moveable mv2 = new Cat();
        Moveable mv3 = new Robot();
 
+       Moveable[] arrMov = {mv1, mv2, mv3};
 
+       Passable ps1 = new Treadmill();
+       Passable ps2 = new Wall();
 
+       Passable[] arrPas = {ps1, ps2};
 
-        Treadmill.doRun(mv1, true);
-        Treadmill.doRun(mv2, false);
+        for (Passable ps: arrPas) {
+            for (Moveable mv: arrMov) {
+                ps.overcomeObstacle(mv, true);
+            }
+        }
     }
 }

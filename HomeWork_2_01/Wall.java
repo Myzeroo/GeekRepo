@@ -1,8 +1,9 @@
 package HomeWork_2_01;
 
-public abstract class Wall {
+public class Wall implements Passable {
 
-    static void doRun(Moveable user, boolean passed) {
+    @Override
+    public void overcomeObstacle(Moveable user, boolean passed) {
         user.jump();
         if (passed) {
             System.out.println("успешно преодолел");
