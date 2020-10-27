@@ -34,22 +34,36 @@ public class MyCalc {
             digitBtn.addActionListener(abListener);
         }
 
+        JPanel eastPanel = new JPanel();
+        eastPanel.setLayout(new GridLayout(5,1));
+        mainFarame.add(eastPanel, BorderLayout.EAST);
+
+
         JButton plusBtn = new JButton("+");
         plusBtn.addActionListener(abListener);
-        centerPanel.add(plusBtn);
+        eastPanel.add(plusBtn);
 
         JButton minusBtn = new JButton("-");
         minusBtn.addActionListener(abListener);
-        centerPanel.add(minusBtn);
+        eastPanel.add(minusBtn);
+
+        JButton timesBtn = new JButton("*");
+        timesBtn.addActionListener(abListener);
+        eastPanel.add(timesBtn);
+
+        JButton dividedBtn = new JButton("/");
+        dividedBtn.addActionListener(abListener);
+        eastPanel.add(dividedBtn);
+
+
 
         JButton cancelBtn = new JButton("C");
+        cancelBtn.addActionListener(abListener);
         centerPanel.add(cancelBtn);
 
         JButton submitBtn = new JButton("Submit");
+        submitBtn.addActionListener(abListener);
         centerPanel.add(submitBtn);
-
-
-
 
         mainFarame.setVisible(true);
     }
