@@ -48,11 +48,11 @@ public class MainHW {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.arraycopy(arr, h, arr2, h, h);
+                System.arraycopy(arr, h, arr2, 0, h);
                 for (int i = 0; i < h; i++) {
                     arr2[i] = (float) (arr2[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
                 }
-                System.arraycopy(arr2, 0, arr, 0, h);
+                System.arraycopy(arr2, 0, arr, h, h);
                 System.out.println("MethodTwo Thread2 " + (System.currentTimeMillis() - a));
             }
         }).start();
