@@ -40,7 +40,7 @@ public class MainHW {
                 for (int i = 0; i < h; i++) {
                     arr1[i] = (float) (arr1[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
                 }
-                System.arraycopy(arr1, 0, arr, 0, h);
+                gluingArrs(arr,arr1,0);
                 System.out.println("MethodTwo Thread1 " + (System.currentTimeMillis() - a));
             }
         }).start();
@@ -52,9 +52,12 @@ public class MainHW {
                 for (int i = 0; i < h; i++) {
                     arr2[i] = (float) (arr2[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
                 }
-                System.arraycopy(arr2, 0, arr, h, h);
+                gluingArrs(arr,arr2,h);
                 System.out.println("MethodTwo Thread2 " + (System.currentTimeMillis() - a));
             }
         }).start();
+    }
+    public static synchronized void gluingArrs(float [] fullArr, float [] changeArr, int pos){
+        System.arraycopy(changeArr, 0, fullArr, pos, h);
     }
 }
