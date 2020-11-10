@@ -36,10 +36,6 @@ public class MyClient {
                     if (outgoingMessage.equals("--exit")) break;
                     System.out.println("Client: " + outgoingMessage);
                 }
-                in.close();
-                out.close();
-                clientSocket.close();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

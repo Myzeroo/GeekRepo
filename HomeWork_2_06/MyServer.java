@@ -41,7 +41,7 @@ public class MyServer {
                     System.out.println("Server: " + outgoingMessage);
                 }
             } catch (IOException e) {
-                System.out.println("outing");
+                e.printStackTrace();
             }
         });
         outThread.setDaemon(true);
