@@ -33,7 +33,10 @@ public class MyClient {
                 while (true) {
                     String outgoingMessage = new Scanner(System.in).nextLine();
                     out.writeUTF(outgoingMessage);
-                    if (outgoingMessage.equals("--exit")) break;
+                    if (outgoingMessage.equals("--exit")) {
+                        System.out.println("закрытие соединения с сервером...");
+                        break;
+                    }
                     System.out.println("Client: " + outgoingMessage);
                 }
             } catch (IOException e) {
