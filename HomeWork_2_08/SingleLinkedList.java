@@ -56,6 +56,18 @@ public class SingleLinkedList implements GBList {
     }
 
     @Override
+    public String get(int index) {
+        GBIterator getVal = new StraightForwardIterator(first);
+        String value = null;
+        for (int i = 0; i <= index; i++) {
+            value = getVal.next();
+            if(!getVal.hasNext())
+                return "Нет элемента с заданым индексом";
+        }
+        return value;
+    }
+
+    @Override
     public GBIterator iterator() {
         return new StraightForwardIterator(first);
     }

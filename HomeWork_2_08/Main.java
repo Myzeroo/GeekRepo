@@ -9,6 +9,10 @@ public class Main {
         list.add("GAZ");
         list.add("TOYOTA");
 
+
+        System.out.println(list.get(3));
+        System.out.println("---------");
+
         GBIterator iterator = list.iterator();
         while (iterator.hasNext()) {
             String next = iterator.next();
