@@ -2,7 +2,8 @@ package HomeWork_2_08;
 
 public class Main {
     public static void main(String[] args) {
-        GBList list = new SingleLinkedList();
+        //GBList list = new SingleLinkedList();
+        GBList list = new DoubleLinkedList();
         list.add("BMW");
         list.add("VAZ");
         list.add("TOYOTA");

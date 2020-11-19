@@ -1,13 +1,16 @@
 package HomeWork_2_08;
 
-public class SingleLinkedList implements GBList {
+public class DoubleLinkedList implements GBList {
     private Node first;
+    private Node last;
     private int size = 0;
+
 
     @Override
     public void add(String val) {
         if (first == null) {
             first = new Node(val);
+            last = first;
         } else {
             add(first, val);
         }
@@ -17,8 +20,10 @@ public class SingleLinkedList implements GBList {
     private void add(Node current, String val) {
         if (current.next != null)
             add(current.next, val);
-        else
-            current.next = new Node(val);
+        else {
+            current.next = new Node(current, val);
+            last = current.next;
+        }
     }
 
     @Override
@@ -34,6 +39,7 @@ public class SingleLinkedList implements GBList {
         while (current != null) {
             if (current.val.equals(val)) {
                 prev.setNext(current.next);
+                current.next.setPrev(prev);
                 size--;
                 return true;
             }
@@ -46,22 +52,16 @@ public class SingleLinkedList implements GBList {
 
     @Override
     public int size() {
-//        int i = 0;
-//        GBIterator iterator = iterator();
-//        while (iterator.hasNext()) {
-//            i++;
-//        }
-//        return i;
         return size;
     }
 
     @Override
     public String get(int index) {
-        GBIterator getVal = new StraightForwardIterator(first);
+        GBIterator getVal = new BidirectionalIterators(first);
         String value = null;
         for (int i = 0; i <= index; i++) {
             value = getVal.next();
-            if(!getVal.hasNext())
+            if (!getVal.hasNext())
                 return "Нет элемента с заданым индексом";
         }
         return value;
@@ -69,31 +69,34 @@ public class SingleLinkedList implements GBList {
 
     @Override
     public GBIterator iterator() {
-        return new StraightForwardIterator(first);
-    }
-
-    @Override
-    public String toString() {
-        return "SingleLinkedList{" +
-                "first=" + first +
-                '}';
+        return new BidirectionalIterators(first);
     }
 
     private static class Node {
         private String val;
         private Node next;
+        private Node prev;
 
-        public Node(String value) {
-            this(value, null);
+        public Node(String val) {
+            this(null, val, null);
         }
 
-        public Node(String val, Node next) {
+        public Node(Node prev, String val) {
+            this(prev, val, null);
+        }
+
+        public Node(Node prev, String val, Node next) {
             this.val = val;
             this.next = next;
+            this.prev = prev;
         }
 
         public void setNext(Node next) {
             this.next = next;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
         }
 
         @Override
@@ -101,14 +104,15 @@ public class SingleLinkedList implements GBList {
             return "Node{" +
                     "val='" + val + '\'' +
                     ", next=" + next +
+                    ", prev=" + prev +
                     '}';
         }
     }
 
-    public static class StraightForwardIterator implements GBIterator {
+    public static class BidirectionalIterators implements GBIterator {
         private Node current;
 
-        public StraightForwardIterator(Node current) {
+        public BidirectionalIterators(Node current) {
             this.current = current;
         }
 
@@ -118,7 +122,9 @@ public class SingleLinkedList implements GBList {
         }
 
         @Override
-        public boolean hasPrev() { return false; }
+        public boolean hasPrev() {
+            return current.prev != null;
+        }
 
         @Override
         public String next() {
@@ -129,7 +135,9 @@ public class SingleLinkedList implements GBList {
 
         @Override
         public String prev() {
-            return null;
+            String val = current.val;
+            current = current.prev;
+            return val;
         }
     }
 }
