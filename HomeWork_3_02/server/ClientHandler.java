@@ -4,6 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,6 +66,7 @@ public class ClientHandler {
         }).start();
     }
 
+
     private void doAuth() {
         try {
             while (socket.isConnected()) {
@@ -105,6 +110,10 @@ public class ClientHandler {
                 String message = in.readUTF();
                 if (message.equals("-exit")) {
                     return;
+                }else if(message.startsWith("-changeName")){
+                    sendMessage("Имя " + name);
+                    changeNickname(message.split("\\s")[1]);
+                    sendMessage("было изменено на " +  name);
                 } else {
                     server.broadcastMessage(message);
                 }
@@ -120,6 +129,41 @@ public class ClientHandler {
         } catch (IOException e) {
             throw new RuntimeException("SWW", e);
         }
+    }
+
+    public boolean changeNickname(String newName) {
+        int id;
+        String sqlSelect = "SELECT * FROM users WHERE nickname = ?";
+        String sqlUpdate = "UPDATE users SET nickname = ? WHERE id = ?";
+
+        try {
+
+            try (Connection connection = DBConnection.getConnection();) {
+                PreparedStatement statement = connection.prepareStatement(sqlSelect);
+
+                statement.setNString(1, name);
+                ResultSet resultSet = statement.executeQuery();
+                resultSet.next();
+                id = resultSet.getInt("id");
+
+                statement = connection.prepareStatement(sqlUpdate);
+                statement.setNString(1, newName);
+                statement.setInt(2, id);
+                statement.executeUpdate();
+
+                statement = connection.prepareStatement(sqlSelect);
+                statement.setNString(1, newName);
+                resultSet = statement.executeQuery();
+
+                if(resultSet.next()){
+                    name = newName;
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
