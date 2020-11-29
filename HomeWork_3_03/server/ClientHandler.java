@@ -53,8 +53,7 @@ public class ClientHandler {
         new Thread(() -> {
             try {
                 doAuth();
-                String tmp = MessageHistory.showHistory(100);
-                sendMessage(tmp);
+                sendMessage(MessageHistory.showHistory(100));
                 receiveMessage();
             } catch (Exception e) {
                 throw new RuntimeException("SWW", e);

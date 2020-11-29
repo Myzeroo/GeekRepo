@@ -1,10 +1,7 @@
 package HomeWork_3_03;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClientApp1 {
     public static void main(String[] args) {
@@ -24,11 +21,11 @@ public class ClientApp1 {
                 }
             }).start();
 
-            Scanner scanner = new Scanner(System.in);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("-auth для авторизации");
             while (true) {
                 try {
-                    out.writeUTF(scanner.nextLine());
+                    out.writeUTF(reader.readLine());
                 } catch (IOException e) {
                     throw new RuntimeException("SWW", e);
                 }
