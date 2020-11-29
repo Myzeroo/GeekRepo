@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection {
-    private DBConnection() {}
+public class DBSource {
+    private DBSource() {}
 
     public static Connection getConnection() {
         try {

@@ -74,8 +74,9 @@ public class ClientHandler {
 
                 if (credentials.startsWith("-auth")) {
                     String[] credentialValues = credentials.split("\\s");
-                    server.getAuthenticationService()
-                            .doAuth(credentialValues[1], credentialValues[2])
+//                    server.getAuthenticationService()
+//                            .doAuth(credentialValues[1], credentialValues[2])
+                    UserRepository.getUserFromDB(credentialValues[1], credentialValues[2])
                             .ifPresentOrElse(
                                     user -> {
                                         if (!server.isLoggedIn(user.getNickname())) {
@@ -112,7 +113,7 @@ public class ClientHandler {
                     return;
                 } else if (message.startsWith("-changeName")) {
                     sendMessage("Имя " + name);
-                    changeNickname(message.split("\\s")[1]);
+                    name =UserRepository.changeNickname(this, message.split("\\s")[1]);
                     sendMessage("было изменено на " + name);
                 } else {
                     server.broadcastMessage(message);
@@ -129,40 +130,6 @@ public class ClientHandler {
         } catch (IOException e) {
             throw new RuntimeException("SWW", e);
         }
-    }
-
-    public boolean changeNickname(String newName) {
-        int id;
-        String sqlSelect = "SELECT * FROM users WHERE nickname = ?";
-        String sqlUpdate = "UPDATE users SET nickname = ? WHERE id = ?";
-
-
-        try (Connection connection = DBConnection.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(sqlSelect);
-
-            statement.setNString(1, name);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            id = resultSet.getInt("id");
-
-            statement = connection.prepareStatement(sqlUpdate);
-            statement.setNString(1, newName);
-            statement.setInt(2, id);
-            statement.executeUpdate();
-
-            statement = connection.prepareStatement(sqlSelect);
-            statement.setNString(1, newName);
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                name = newName;
-                return true;
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     @Override
