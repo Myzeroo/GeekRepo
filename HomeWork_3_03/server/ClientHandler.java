@@ -4,10 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,6 +53,8 @@ public class ClientHandler {
         new Thread(() -> {
             try {
                 doAuth();
+                String tmp = MessageHistory.showHistory(100);
+                sendMessage(tmp);
                 receiveMessage();
             } catch (Exception e) {
                 throw new RuntimeException("SWW", e);
@@ -66,7 +64,6 @@ public class ClientHandler {
         }).start();
     }
 
-
     private void doAuth() {
         try {
             while (socket.isConnected()) {
@@ -74,8 +71,6 @@ public class ClientHandler {
 
                 if (credentials.startsWith("-auth")) {
                     String[] credentialValues = credentials.split("\\s");
-//                    server.getAuthenticationService()
-//                            .doAuth(credentialValues[1], credentialValues[2])
                     UserRepository.getUserFromDB(credentialValues[1], credentialValues[2])
                             .ifPresentOrElse(
                                     user -> {
@@ -117,6 +112,7 @@ public class ClientHandler {
                     sendMessage("было изменено на " + name);
                 } else {
                     server.broadcastMessage(message);
+                    MessageHistory.writeMessage(message);
                 }
             }
         } catch (IOException e) {

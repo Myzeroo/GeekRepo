@@ -1,6 +1,5 @@
 package HomeWork_3_03.server;
 
-import HomeWork_3_03.auth.AuthenticationService;
 import HomeWork_3_03.entity.User;
 
 import java.sql.Connection;
@@ -12,13 +11,13 @@ import java.util.Optional;
 public class UserRepository {
 
     public static Optional<User> getUserFromDB(String email, String password) {
-        ResultSet resultSet = null;
+        //ResultSet resultSet = null;
         String andCondition = "";
-        String sqlSelect = String.format("SELECT * FROM users WHERE mail = %s AND password = %s", email, password);
+        String sqlSelect = String.format("SELECT * FROM users WHERE mail = '%s' AND password = '%s' ", email, password);
 
         try (Connection connect = DBSource.getConnection();
              PreparedStatement statement = connect.prepareStatement(sqlSelect);) {
-            ResultSet resultSet1 = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 User user = new User(
                         resultSet.getString("nickname"),
