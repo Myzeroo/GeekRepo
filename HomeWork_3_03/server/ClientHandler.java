@@ -14,6 +14,7 @@ public class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private String name;
+    private MessageHistory history;
 
     public ClientHandler(Server server, Socket socket) {
         try {
@@ -53,7 +54,7 @@ public class ClientHandler {
         new Thread(() -> {
             try {
                 doAuth();
-                sendMessage(MessageHistory.showHistory(100));
+                sendMessage(history.showHistory(100));
                 receiveMessage();
             } catch (Exception e) {
                 throw new RuntimeException("SWW", e);
@@ -76,6 +77,7 @@ public class ClientHandler {
                                         if (!server.isLoggedIn(user.getNickname())) {
                                             sendMessage("cmd auth: Status OK");
                                             name = user.getNickname();
+                                            history = new MessageHistory(credentialValues[1]);
                                             server.broadcastMessage(name + " is logged in.");
                                             server.subscribe(this);
                                         } else {
@@ -104,6 +106,7 @@ public class ClientHandler {
             while (true) {
                 String message = in.readUTF();
                 if (message.equals("-exit")) {
+                    server.unsubscribe(this);
                     return;
                 } else if (message.startsWith("-changeName")) {
                     sendMessage("Имя " + name);
@@ -111,7 +114,7 @@ public class ClientHandler {
                     sendMessage("было изменено на " + name);
                 } else {
                     server.broadcastMessage(message);
-                    MessageHistory.writeMessage(message);
+                    history.writeMessage(message);
                 }
             }
         } catch (IOException e) {

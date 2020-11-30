@@ -3,11 +3,21 @@ package HomeWork_3_03.server;
 import java.io.*;
 
 public class MessageHistory {
+    String locationFile;
+    File fileHistory;
 
-    static String locationFile = "src/HomeWork_3_03/log/Log.txt";
-    static File fileHistory = new File(locationFile);
+    public MessageHistory(String fileName) {
 
-    public static void writeMessage(String message) {
+        locationFile = String.format("src/HomeWork_3_03/log/%s.txt", fileName);
+        fileHistory = new File(locationFile);
+        try {
+            fileHistory.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeMessage(String message) {
         try {
             BufferedWriter bw = new BufferedWriter(
                     new FileWriter(
@@ -20,13 +30,14 @@ public class MessageHistory {
         }
     }
 
-    public static String showHistory(int countMessage){
+    public String showHistory(int countMessage){
         StringBuilder result = new StringBuilder();
         int countLines = 0;
 
         try {
             RandomAccessFile raf = new RandomAccessFile(fileHistory, "r");
             long fileLengthInByte = fileHistory.length()-1;
+            if(fileLengthInByte<0) return "";
             raf.seek(fileLengthInByte);
 
             for (long i = fileLengthInByte; i >= 0 ; i--) {
