@@ -3,8 +3,8 @@ package HomeWork_3_03.server;
 import java.io.*;
 
 public class MessageHistory {
-    String locationFile;
-    File fileHistory;
+    private String locationFile;
+    private File fileHistory;
 
     public MessageHistory(String fileName) {
 

@@ -1,10 +1,8 @@
 package HomeWork_3_03.auth;
 
 import HomeWork_3_03.entity.User;
-import HomeWork_3_03.server.DBSource;
 import HomeWork_3_03.server.UserRepository;
 
-import java.sql.*;
 import java.util.Optional;
 
 public class BasicAuthenticationService implements AuthenticationService {
