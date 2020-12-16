@@ -1,47 +1,67 @@
 package HomeWork_3_07;
 
+import HomeWork_3_07.Annotations.AfterSuite;
+import HomeWork_3_07.Annotations.BeforeSuite;
+import HomeWork_3_07.Annotations.Test;
+
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestClass {
 
-    public void start(Class cls) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+    public void start(Class stClass) throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+        Class clClass = Class.forName(stClass.getName());
+        Constructor constructor = clClass.getConstructor();
+        Object obj1 = constructor.newInstance();
 
         int beforeCount = 0;
         int afterCount = 0;
 
-        Annotation[] annotations = cls.getAnnotations();
-        for (Annotation annot: annotations) {
-            if(annot.equals("BeforeSuite")) beforeCount++;
-            if(annot.equals("AfterSuite")) afterCount++;
-        }
-        if(beforeCount > 1 || afterCount > 1) throw new RuntimeException("BeforeSuite или AfterSuite больше чем по одному");
-
-        Method[] methods = cls.getDeclaredMethods();
-        for (Method mth: methods) {
-            if(mth.getAnnotatedReturnType().equals("BeforeSuite")){
-                mth.invoke(cls);
+        Method[] methods = clClass.getDeclaredMethods();
+        for (Method m : methods) {
+            if (m.getAnnotation(BeforeSuite.class) != null) {
+                beforeCount++;
+            }
+            if (m.getAnnotation(AfterSuite.class) != null) {
+                afterCount++;
             }
         }
+        if (beforeCount > 1 || afterCount > 1) throw new RuntimeException("Неверное количество бефор или афтер");
 
-        for (int i = 1; i < 10; i ++){
-            for (Method mth: methods) {
-                if(mth.getAnnotatedReturnType().equals("Test")){
-                     Field field = cls.getDeclaredField("priority");
-                     if(i == field.getInt(cls)){
-                         mth.invoke(cls);
-                     }
+        for (Method m : methods) {
+            if (m.getAnnotation(BeforeSuite.class) != null) {
+                m.setAccessible(true);
+                m.invoke(obj1);
+                m.setAccessible(false);
+            }
+        }
+        Map<Integer, Method> orders = new HashMap();
+        for (Method m : methods) {
+            for (int i = 1; i <= 10; i++) {
+                if (m.getAnnotation(Test.class) != null) {
+                    if (((Test) m.getAnnotation(Test.class)).priority() == i) {
+                        orders.put(i, m);
+                    }
                 }
             }
         }
-
-        for (Method mth: methods) {
-            if(mth.getAnnotatedReturnType().equals("AfterSuite")){
-                mth.invoke(cls);
+        for (Map.Entry<Integer, Method> entry : orders.entrySet()) {
+            entry.getValue().setAccessible(true);
+            entry.getValue().invoke(obj1);
+            entry.getValue().setAccessible(false);
+        }
+        for (Method m : methods) {
+            if (m.getAnnotation(AfterSuite.class) != null) {
+                m.setAccessible(true);
+                m.invoke(obj1);
+                m.setAccessible(false);
             }
         }
-
     }
 }
+
